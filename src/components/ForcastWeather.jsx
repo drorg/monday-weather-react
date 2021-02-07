@@ -7,7 +7,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
 import ErrorIcon from "@material-ui/icons/Error";
-import getLocationWeather from "../../api/getLocationWeather";
+import getLocationWeather from "../api/getLocationWeather";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 
@@ -51,7 +51,7 @@ function ErrorMessage({ apiError }) {
     );
 }
 
-function LocationWeather({ location }) {
+function ForcastWeather({ location }) {
     const classes = useStyles();
     const [weatherData, setWeatherData] = React.useState({});
     const [apiError, setApiError] = React.useState("");
@@ -132,8 +132,8 @@ function LocationWeather({ location }) {
     );
 }
 
-LocationWeather.propTypes = {
+ForcastWeather.propTypes = {
     location: PropTypes.object.isRequired,
 };
 
-export default LocationWeather;
+export default ForcastWeather;
