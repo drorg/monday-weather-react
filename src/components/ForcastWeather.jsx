@@ -58,7 +58,7 @@ function ForcastWeather({ location }) {
     const [isLoading, setIsLoading] = React.useState(false);
 
     React.useEffect(() => {
-        const loadingIndicatorTimeout = setTimeout(() => setIsLoading(true), 200);
+        const loadingIndicatorTimeout = setTimeout(() => setIsLoading(true), 100);
         const getWeather = async () => {
             console.log("loading getWeather("+ location.cityName +"), loading.. 10000ms interval");
             const result = await getLocationWeather(location);
