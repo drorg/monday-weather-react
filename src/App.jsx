@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
         padding: "2em",
     },
     inputForm: {
-        padding: "2em",
+        padding: "1em",
         alignItems: 'center',
     },
     title: {
@@ -55,22 +55,15 @@ function readFromLocalStorage() {
 
 function App() {
     const classes = useStyles();
-    const [weatherLocations, setWeatherLocations] = React.useState(readFromLocalStorage());
-    
+    const [weatherLocations, setWeatherLocations] = React.useState(readFromLocalStorage());  
 
     const [city, setCity] = React.useState('');
     const [unit, setUnit] = React.useState('metric');
-    const handleFormSubmit = ev => {
-        // ev.preventDefault();
-        var cityName = city.replace(/(^\w|\s\w)/g, m => m.toUpperCase());
-        if (!weatherLocations.some(location => location.cityName === cityName)) {
-            // setWeatherLocations([...weatherLocations, {cityName,unit}]);
-            weatherLocations.push({cityName,unit})
-            saveToLocalStorage(weatherLocations);
-        }
-        setCity("");
-        setUnit("metric")
-    };
+
+    const [didSubmit, setDidSubmit] = React.useState(false);
+    React.useEffect(() => {
+        saveToLocalStorage(weatherLocations);
+      }, [didSubmit]);
 
     const updateLocations = locations => {
         setWeatherLocations(locations);
@@ -80,8 +73,6 @@ function App() {
     const removeAtIndex = index => () =>{
         updateLocations(weatherLocations.filter((_, locationIndex) => locationIndex !== index));
     }
-
-    
 
     const canAddOrRemove = React.useMemo(() => weatherLocations.every(location => location !== ""), [weatherLocations]);
 
@@ -95,37 +86,41 @@ function App() {
                     </Typography>
                 </Toolbar>
             </AppBar>
-            <form className={classes.inputForm}
-            onSubmit={handleFormSubmit}>
-                <div>
-                <TextField
-                        className={classes.textInput}
-                        type="text"
-                        placeholder="Enter City"
-                        maxLength="50"
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}/>
+            <div>
+            <TextField className={classes.inputForm}
+                    type="text"
+                    placeholder="Enter City"
+                    maxLength="50"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}/>
+            </div>
+            <div>
+            <FormControl component="fieldset">
+                <RadioGroup
+                    aria-label="Gender"
+                    name="gender1"
+                    className={classes.group}
+                    value={unit}
+                    onChange={(e) => setUnit(e.target.value)}>
+                        <FormControlLabel value="metric" control={<Radio />} label="Celcius" />  
+                        <FormControlLabel value="standard" control={<Radio />} label="Kelvin" />
+                </RadioGroup>
+                </FormControl>
                 </div>
                 <div>
-                <FormControl component="fieldset">
-                    <RadioGroup
-                        aria-label="Gender"
-                        name="gender1"
-                        className={classes.group}
-                        value={unit}
-                        onChange={(e) => setUnit(e.target.value)}>
-                            <FormControlLabel value="metric" control={<Radio />} label="Celcius" />  
-                            <FormControlLabel value="standard" control={<Radio />} label="Kelvin" />
-                    </RadioGroup>
-                  </FormControl>
-                  </div>
-                  <div>
-                    <Button variant="contained" color="secondary"
-                        onClick={() => { handleFormSubmit('Button clicked') }}>
-                        Add Location
-                    </Button>
-                </div>
-            </form>
+                <Button variant="contained" color="secondary"
+                    onClick={() => { 
+                        var cityName = city.replace(/(^\w|\s\w)/g, m => m.toUpperCase());
+                        if (!weatherLocations.some(location => location.cityName === cityName)) {
+                            setWeatherLocations([...weatherLocations, {cityName,unit}]);
+                            setDidSubmit(true);
+                            setCity('');
+                            setUnit('metric');
+                        }
+                    }}>
+                    Add Location
+                </Button>
+            </div>
             <Grid container spacing={3} className={classes.containerGrid}>
                 {weatherLocations.map((location, index) => (
                     <Grid key={location} xs={12} sm={6} md={4} lg={3} item>

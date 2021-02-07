@@ -58,7 +58,7 @@ function ForcastWeather({ location }) {
     const [isLoading, setIsLoading] = React.useState(false);
 
     React.useEffect(() => {
-        const loadingIndicatorTimeout = setTimeout(() => setIsLoading(true), 500);
+        const loadingIndicatorTimeout = setTimeout(() => setIsLoading(true), 200);
         const getWeather = async () => {
             console.log("loading getWeather("+ location.cityName +"), loading.. 10000ms interval");
             const result = await getLocationWeather(location);
@@ -92,7 +92,7 @@ function ForcastWeather({ location }) {
             windSpeed: weatherData.wind ? Math.round(weatherData.wind.speed) : 0,
             unitsSymbol: "standard" === location.unit ? "K" : "C",
         };
-    }, [weatherData, location]);
+    }, [weatherData, location.unit]);
     
     return (
         <>
