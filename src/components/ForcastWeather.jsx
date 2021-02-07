@@ -60,6 +60,7 @@ function ForcastWeather({ location }) {
     React.useEffect(() => {
         const loadingIndicatorTimeout = setTimeout(() => setIsLoading(true), 500);
         const getWeather = async () => {
+            console.log("loading getWeather("+ location.cityName +"), loading.. 10000ms interval");
             const result = await getLocationWeather(location);
             clearTimeout(loadingIndicatorTimeout);
             setIsLoading(false);
@@ -101,7 +102,7 @@ function ForcastWeather({ location }) {
                 </Typography>
                 {flagIcon && <img alt={countryCode} src={flagIcon} />}
             </div>
-            {/* <div className={classes.detailLine}> */}
+            <div className={classes.detailLine}>
                 <LoadingIndicator isLoading={isLoading} />
                 <ErrorMessage apiError={apiError} />
                 <List >
@@ -127,7 +128,7 @@ function ForcastWeather({ location }) {
                         )}
                     </ListItem>
                 </List>
-            {/* </div> */}
+            </div>
         </>
     );
 }
