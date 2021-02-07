@@ -95,16 +95,16 @@ function App() {
                     onChange={(e) => setCity(e.target.value)}/>
             </div>
             <div>
-            <FormControl component="fieldset">
-                <RadioGroup
-                    aria-label="Gender"
-                    name="gender1"
-                    className={classes.group}
-                    value={unit}
-                    onChange={(e) => setUnit(e.target.value)}>
-                        <FormControlLabel value="metric" control={<Radio />} label="Celcius" />  
-                        <FormControlLabel value="standard" control={<Radio />} label="Kelvin" />
-                </RadioGroup>
+                <FormControl component="fieldset">
+                    <RadioGroup
+                        aria-label="Gender"
+                        name="gender1"
+                        className={classes.group}
+                        value={unit}
+                        onChange={(e) => setUnit(e.target.value)}>
+                            <FormControlLabel value="metric" control={<Radio />} label="Celcius" />  
+                            <FormControlLabel value="standard" control={<Radio />} label="Kelvin" />
+                    </RadioGroup>
                 </FormControl>
                 </div>
                 <div>
