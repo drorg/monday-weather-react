@@ -23,6 +23,7 @@ const useStyles = makeStyles(() => ({
         flexDirection: "column",
         height: "100vh",
         overflow: "hidden",
+        alignItems: "center",
     },
     containerGrid: {
         flex: 1,
@@ -30,8 +31,9 @@ const useStyles = makeStyles(() => ({
         padding: "2em",
     },
     inputForm: {
+        display: "flex",
+        justifyContent: "center",
         padding: "1em",
-        alignItems: 'center',
     },
     title: {
         flexGrow: 1,
@@ -80,34 +82,28 @@ function App() {
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
-                    <img src={logo} alt="Kitty Katty!" className={classes.logo} />
+                    <img src={logo} className={classes.logo} />
                     <Typography variant="h6" color="inherit" className={classes.title}>
                         Weather App
                     </Typography>
                 </Toolbar>
             </AppBar>
-            <div>
-            <TextField className={classes.inputForm}
-                    type="text"
-                    placeholder="Enter City"
-                    maxLength="50"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}/>
-            </div>
-            <div>
-                <FormControl component="fieldset">
-                    <RadioGroup
-                        aria-label="Gender"
-                        name="gender1"
-                        className={classes.group}
-                        value={unit}
-                        onChange={(e) => setUnit(e.target.value)}>
-                            <FormControlLabel value="metric" control={<Radio />} label="Celcius" />  
-                            <FormControlLabel value="standard" control={<Radio />} label="Kelvin" />
-                    </RadioGroup>
-                </FormControl>
-                </div>
-                <div>
+            <FormControl component="fieldset">
+                <TextField className={classes.inputForm}
+                        type="text"
+                        placeholder="Enter City"
+                        maxLength="50"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}/>
+                <RadioGroup
+                    aria-label="Gender"
+                    name="gender1"
+                    className={classes.group}
+                    value={unit}
+                    onChange={(e) => setUnit(e.target.value)}>
+                        <FormControlLabel value="metric" control={<Radio />} label="Celcius" />  
+                        <FormControlLabel value="standard" control={<Radio />} label="Kelvin" />
+                </RadioGroup>
                 <Button variant="contained" color="secondary"
                     onClick={() => { 
                         var cityName = city.replace(/(^\w|\s\w)/g, m => m.toUpperCase());
@@ -120,7 +116,7 @@ function App() {
                     }}>
                     Add Location
                 </Button>
-            </div>
+            </FormControl>
             <Grid container spacing={3} className={classes.containerGrid}>
                 {weatherLocations.map((location, index) => (
                     <Grid key={location} xs={12} sm={6} md={4} lg={3} item>
